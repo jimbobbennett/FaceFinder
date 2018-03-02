@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="FaceFinder.FaceDetailsPage"
+             Title="{Binding Description}">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+
+            <Image Grid.Row="0" Source="{Binding Photo}" Aspect="AspectFill"/>
+            <ScrollView Grid.Row="1">
+                <Label Text="{Binding Details}" LineBreakMode="WordWrap" Margin="5" TextColor="#3B3B3B"/>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

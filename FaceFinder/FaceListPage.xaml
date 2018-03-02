@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="FaceFinder.FaceListPage"
+             Title="Found faces">
+    <ContentPage.Content>
+        <ListView ItemsSource="{Binding Faces}" 
+                  SelectedItem="{Binding SelectedFace}" 
+                  SeparatorColor="Transparent" 
+                  ItemTapped="HandleItemTapped"
+                  HasUnevenRows="true"
+                  RowHeight="100">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal" Spacing="20" Margin="20.2">
+                            <Image Source="{Binding Photo}" Aspect="AspectFill"/>
+                            <Label VerticalOptions="Center" Text="{Binding Description}"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ContentPage.Content>
+</ContentPage>
