@@ -22,6 +22,7 @@ namespace FaceFinder
             sb.AppendLine($"Smile: {face.FaceAttributes.Smile:P0}");
             sb.AppendLine($"Makeup: {GetMakeup(face)}");
             sb.AppendLine($"Hair: {GetHair(face)}");
+            sb.AppendLine($"Facial Hair: {GetFacialHair(face)}");
             sb.AppendLine($"Emotion: {GetEmotion(face)}");
 
             Details = sb.ToString();
@@ -54,6 +55,18 @@ namespace FaceFinder
                 return "Unknown";
 
             return $"{color.Color}";
+        }
+
+        private string GetFacialHair(DetectedFace face)
+        {
+            if (face.FaceAttributes.FacialHair.Beard.GetValueOrDefault() < 0.1 &&
+                face.FaceAttributes.FacialHair.Moustache.GetValueOrDefault() < 0.1 &&
+                face.FaceAttributes.FacialHair.Sideburns.GetValueOrDefault() < 0.1)
+                return "None";
+
+            return $"Beard ({face.FaceAttributes.FacialHair.Beard.GetValueOrDefault():P0}), " +
+                $"Moustache ({face.FaceAttributes.FacialHair.Moustache.GetValueOrDefault():P0}), " +
+                $"Sideburns ({face.FaceAttributes.FacialHair.Sideburns.GetValueOrDefault():P0}), ";
         }
 
         private string GetEmotion(DetectedFace face)
