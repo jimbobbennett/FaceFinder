@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Microsoft.Azure.CognitiveServices.Vision;
 using Microsoft.Azure.CognitiveServices.Vision.Face;
 using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 using Plugin.Media.Abstractions;
@@ -12,15 +11,15 @@ namespace FaceFinder
 {
     public class FaceFinderViewModel : ViewModelBase
     {
-        FaceAPI _FaceFinder;
+        FaceClient _faceClient;
 
         public FaceFinderViewModel()
         {
             TakePhotoCommand = new Command(async () => await TakePhoto());
 
-            _FaceFinder = new FaceAPI(new ApiKeyServiceClientCredentials(ApiKeys.FaceApiKey))
+            _faceClient = new FaceClient(new ApiKeyServiceClientCredentials(ApiKeys.FaceApiKey))
             {
-                AzureRegion = ApiKeys.FaceApiRegion
+                Endpoint = ApiKeys.FaceApiEndpoint
             };
         }
 
@@ -49,15 +48,14 @@ namespace FaceFinder
                 IsBusy = true;
 
                 _photo = await Plugin.Media.CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions());
-                PhotoSource = (StreamImageSource)ImageSource.FromStream(() => _photo.GetStream());
+                PhotoSource = (StreamImageSource)ImageSource.FromStream(_photo.GetStream);
 
                 using (var s = _photo.GetStreamWithImageRotatedForExternalStorage())
                 {
-                    var fo = new FaceOperations(_FaceFinder);
-                    var fa = Enum.GetValues(typeof(FaceAttributeTypes))
-                                 .OfType<FaceAttributeTypes>()
+                    var fa = Enum.GetValues(typeof(FaceAttributeType))
+                                 .OfType<FaceAttributeType>()
                                  .ToList();
-                    var faces = await fo.DetectInStreamAsync(s, true, true, fa);
+                    var faces = await _faceClient.Face.DetectWithStreamAsync(s, true, true, fa);
 
                     if (faces.Any())
                     {

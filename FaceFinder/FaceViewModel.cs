@@ -34,8 +34,8 @@ namespace FaceFinder
         {
             var makeup = (new[]
             {
-                face.FaceAttributes.Makeup.EyeMakeup.GetValueOrDefault(false) ? "Eyes" : "",
-                face.FaceAttributes.Makeup.LipMakeup.GetValueOrDefault(false) ? "Lips" : "",
+                face.FaceAttributes.Makeup.EyeMakeup ? "Eyes" : "",
+                face.FaceAttributes.Makeup.LipMakeup ? "Lips" : "",
             }).Where(m => !string.IsNullOrEmpty(m));
 
             var makeups = string.Join(", ", makeup);
@@ -44,10 +44,10 @@ namespace FaceFinder
 
         private string GetHair(DetectedFace face)
         {
-            if (face.FaceAttributes.Hair.Invisible.GetValueOrDefault(false))
+            if (face.FaceAttributes.Hair.Invisible)
                 return "Hidden";
 
-            if (face.FaceAttributes.Hair.Bald.GetValueOrDefault(0) > 0.75)
+            if (face.FaceAttributes.Hair.Bald > 0.75)
                 return "Bald";
 
             var color = face.FaceAttributes.Hair.HairColor.OrderByDescending(h => h.Confidence).FirstOrDefault();
@@ -59,28 +59,28 @@ namespace FaceFinder
 
         private string GetFacialHair(DetectedFace face)
         {
-            if (face.FaceAttributes.FacialHair.Beard.GetValueOrDefault() < 0.1 &&
-                face.FaceAttributes.FacialHair.Moustache.GetValueOrDefault() < 0.1 &&
-                face.FaceAttributes.FacialHair.Sideburns.GetValueOrDefault() < 0.1)
+            if (face.FaceAttributes.FacialHair.Beard < 0.1 &&
+                face.FaceAttributes.FacialHair.Moustache < 0.1 &&
+                face.FaceAttributes.FacialHair.Sideburns < 0.1)
                 return "None";
 
-            return $"Beard ({face.FaceAttributes.FacialHair.Beard.GetValueOrDefault():P0}), " +
-                $"Moustache ({face.FaceAttributes.FacialHair.Moustache.GetValueOrDefault():P0}), " +
-                $"Sideburns ({face.FaceAttributes.FacialHair.Sideburns.GetValueOrDefault():P0}), ";
+            return $"Beard ({face.FaceAttributes.FacialHair.Beard:P0}), " +
+                $"Moustache ({face.FaceAttributes.FacialHair.Moustache:P0}), " +
+                $"Sideburns ({face.FaceAttributes.FacialHair.Sideburns:P0}), ";
         }
 
         private string GetEmotion(DetectedFace face)
         {
             var emotions = new Dictionary<string, double>
             {
-                {nameof(face.FaceAttributes.Emotion.Anger), face.FaceAttributes.Emotion.Anger.GetValueOrDefault()},
-                {nameof(face.FaceAttributes.Emotion.Contempt), face.FaceAttributes.Emotion.Contempt.GetValueOrDefault()},
-                {nameof(face.FaceAttributes.Emotion.Disgust), face.FaceAttributes.Emotion.Disgust.GetValueOrDefault()},
-                {nameof(face.FaceAttributes.Emotion.Fear), face.FaceAttributes.Emotion.Fear.GetValueOrDefault()},
-                {nameof(face.FaceAttributes.Emotion.Happiness), face.FaceAttributes.Emotion.Happiness.GetValueOrDefault()},
-                {nameof(face.FaceAttributes.Emotion.Neutral), face.FaceAttributes.Emotion.Neutral.GetValueOrDefault()},
-                {nameof(face.FaceAttributes.Emotion.Sadness), face.FaceAttributes.Emotion.Sadness.GetValueOrDefault()},
-                {nameof(face.FaceAttributes.Emotion.Surprise), face.FaceAttributes.Emotion.Surprise.GetValueOrDefault()},
+                {nameof(face.FaceAttributes.Emotion.Anger), face.FaceAttributes.Emotion.Anger},
+                {nameof(face.FaceAttributes.Emotion.Contempt), face.FaceAttributes.Emotion.Contempt},
+                {nameof(face.FaceAttributes.Emotion.Disgust), face.FaceAttributes.Emotion.Disgust},
+                {nameof(face.FaceAttributes.Emotion.Fear), face.FaceAttributes.Emotion.Fear},
+                {nameof(face.FaceAttributes.Emotion.Happiness), face.FaceAttributes.Emotion.Happiness},
+                {nameof(face.FaceAttributes.Emotion.Neutral), face.FaceAttributes.Emotion.Neutral},
+                {nameof(face.FaceAttributes.Emotion.Sadness), face.FaceAttributes.Emotion.Sadness},
+                {nameof(face.FaceAttributes.Emotion.Surprise), face.FaceAttributes.Emotion.Surprise},
             };
 
             return emotions.OrderByDescending(e => e.Value).First().Key;
