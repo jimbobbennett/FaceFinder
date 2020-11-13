@@ -6,7 +6,7 @@ Read more on how this works and how to use it from [this blog post](https://www.
 
 #### Getting started with FaceAPI
 
-From the [Azure Portal](https://portal.azure.com/?WT.mc_id=azureportal-blog-jabenn), select __Create a resource__, search for _"Face"_, and select __Face__ from the __AI + Machine Learning__ category. The click __Create__.
+From the [Azure Portal](https://portal.azure.com/?WT.mc_id=academic-0000-jabenn), select __Create a resource__, search for _"Face"_, and select __Face__ from the __AI + Machine Learning__ category. The click __Create__.
 
 ![Selecting the Face API](https://www.jimbobbennett.io/content/images/2018/11/2018-11-05_11-20-49.png)
 
@@ -18,7 +18,7 @@ Choose a resource group, or create a new one and click __Create__. Once it has b
 
 #### Building and running the app
 
-The Face Finder app is pretty complete, all you need to do is update the `ApiKeys.cs` file with your API key and endpoint. For the `FaceApiKey`, copy yours and paste it in. For the `FaceApiEndpoint`, paste the value for the endpoint, removing everything past `microsoft.com`. For example, for me the endpoint shown in the Azure portal is _https://westeurope.api.cognitive.microsoft.com/face/v1.0_, so I would set the endpoint to `https://westeurope.api.cognitive.microsoft.com`.
+The Face Finder app is pretty complete, all you need to do is update the `ApiKeys.cs` file with your API key and endpoint. For the `FaceApiKey`, copy yours and paste it in. For the `FaceApiEndpoint`, paste the value for the endpoint, removing everything past `microsoft.com`. For example, for me the endpoint shown in the Azure portal is _https://westeurope.api.cognitive.microsoft.com/face/v1.0_?WT.mc_id=academic-0000-jabenn, so I would set the endpoint to `https://westeurope.api.cognitive.microsoft.com`.
 
 > If you get a _Not Found_ exception, then check your endpoint - this exception is thrown if you don't remove everything past `microsoft.com`.
 
